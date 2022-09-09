@@ -1,0 +1,57 @@
+version: '3.9'
+services:
+  web:
+    image: srv-keycloak:latest
+    command:
+      - start-dev
+      - --import-realm
+    networks:
+      schambeck-net:
+        aliases:
+          - srv-keycloak.localhost
+    environment:
+      - KC_HTTP_PORT=80
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - REALM_NAME=schambeck
+    deploy:
+      resources:
+        limits:
+          memory: 640M
+        reservations:
+          memory: 512M
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.srv-keycloak.rule=Host(`srv-keycloak.localhost`)
+        - traefik.http.services.srv-keycloak.loadbalancer.server.port=80
+  ldap:
+    image: bitnami/openldap
+    networks:
+      schambeck-net:
+        aliases:
+          - srv-ldap
+    ports:
+      - '1389:1389'
+      - '1636:1636'
+    environment:
+      - LDAP_ROOT=dc=schambeck,dc=com
+      - LDAP_BIND_DN=cn=admin,dc=schambeck,dc=com
+      - LDAP_BIND_PASSWORD=admin
+      - LDAP_ADMIN_USERNAME=admin
+      - LDAP_ADMIN_PASSWORD=admin
+      - LDAP_USERS=user01,user02
+      - LDAP_PASSWORDS=password1,password2
+    volumes:
+      - 'openldap_data:/bitnami/openldap'
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+        reservations:
+          memory: 32M
+volumes:
+  openldap_data:
+    driver: local
+networks:
+  schambeck-net:
+    external: true
