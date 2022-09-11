@@ -5,7 +5,7 @@
 
 ### Build docker image
 
-    make docker-build
+    docker build -t srv-keycloak:latest .
 
 ### Initialize Swarm
 
