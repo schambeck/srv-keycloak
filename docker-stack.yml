@@ -49,9 +49,32 @@ services:
           memory: 64M
         reservations:
           memory: 32M
+  proxy:
+    image: traefik:latest
+    networks:
+      - schambeck-net
+    command:
+      - --providers.docker.swarmMode=true
+      - --providers.docker.exposedByDefault=false
+      - --api.dashboard=true
+      - --api.insecure=true
+    ports:
+      - target: 80
+        published: 80
+      - target: 8080
+        published: 8080
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+        reservations:
+          memory: 32M
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   openldap_data:
     driver: local
 networks:
   schambeck-net:
-    external: true
+    name: schambeck-net
+    driver: overlay
