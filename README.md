@@ -1,5 +1,5 @@
 # Keycloak SSO with Identity and Access Management
-[![maven](https://github.com/schambeck/srv-keycloak/actions/workflows/maven.yml/badge.svg)](https://github.com/schambeck/srv-keycloak/actions/workflows/maven.yml)
+[![maven](https://github.com/schambeck/srv-keycloak/actions/workflows/docker-image.yml/badge.svg)](https://github.com/schambeck/srv-keycloak/actions/workflows/maven.yml)
 
 ## Server Deployment
 
@@ -13,7 +13,7 @@
 
 ### Deploy Stack
 
-    make docker-run
+    make stack-deploy
 
 ## Web UI
 
