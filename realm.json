@@ -648,7 +648,8 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "newClientSecret",
       "redirectUris": [
-        "http://localhost:4200/"
+        "http://localhost:4200",
+        "http://localhost:4200/index.html"
       ],
       "webOrigins": [
         "*"
@@ -667,7 +668,7 @@
         "oidc.ciba.grant.enabled": "false",
         "client.secret.creation.time": "1662635226",
         "backchannel.logout.session.required": "true",
-        "post.logout.redirect.uris": "http://localhost:4200/##",
+        "post.logout.redirect.uris": "http://localhost:4200/index.html##http://localhost:4200",
         "display.on.consent.screen": "false",
         "oauth2.device.authorization.grant.enabled": "false",
         "backchannel.logout.revoke.offline.tokens": "false"
